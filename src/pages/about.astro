@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="Learn more about David Leftwich.">
+  <div class="page-header">
+    <h1>About Me</h1>
+  </div>
+
+  <div class="about-content">
+    <div class="about-main">
+      <section class="bio">
+        <p class="lead">
+          Hello, I'm David Leftwich. Welcome to my personal website.
+        </p>
+
+        <p>
+          <!-- TODO: Replace this placeholder with your actual bio -->
+          This is a placeholder for your professional summary. You can describe your background,
+          what you do professionally, your interests, and what drives you.
+        </p>
+
+        <p>
+          <!-- TODO: Add more details about yourself -->
+          Feel free to add information about your career, education, hobbies, or anything
+          else you'd like visitors to know about you.
+        </p>
+      </section>
+
+      <section class="interests">
+        <h2>Interests</h2>
+        <ul>
+          <li>Film and Cinema</li>
+          <li><!-- Add your interests --></li>
+          <li><!-- Add your interests --></li>
+        </ul>
+      </section>
+    </div>
+
+    <aside class="about-sidebar">
+      <div class="profile-placeholder">
+        <span>Photo</span>
+      </div>
+
+      <div class="contact-info">
+        <h3>Connect</h3>
+        <ul class="social-list">
+          <li>
+            <a href="https://letterboxd.com/PghMovieGuy" target="_blank" rel="noopener noreferrer">
+              Letterboxd
+            </a>
+          </li>
+          <!-- Add more social links as needed -->
+        </ul>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .about-content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 3rem;
+  }
+
+  .bio {
+    margin-bottom: 2rem;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .interests {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .interests ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .interests li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .interests li:last-child {
+    border-bottom: none;
+  }
+
+  .about-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    align-self: start;
+  }
+
+  .profile-placeholder {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-info {
+    padding: 1.5rem;
+    background: var(--color-bg-secondary);
+    border-radius: 8px;
+  }
+
+  .contact-info h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .social-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .social-list li {
+    margin-bottom: 0.5rem;
+  }
+
+  .social-list a {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .about-content {
+      grid-template-columns: 1fr;
+    }
+
+    .about-sidebar {
+      position: static;
+      order: -1;
+    }
+
+    .profile-placeholder {
+      max-width: 200px;
+      margin: 0 auto 1.5rem;
+    }
+  }
+</style>

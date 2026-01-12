@@ -1,0 +1,128 @@
+---
+interface Props {
+  title: string;
+  year: number;
+  rating: number;
+  watchedDate: string;
+  posterUrl: string;
+  reviewUrl: string;
+}
+
+const { title, year, rating, watchedDate, posterUrl, reviewUrl } = Astro.props;
+
+function formatRating(rating: number): string {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 >= 0.5;
+  return '★'.repeat(fullStars) + (halfStar ? '½' : '');
+}
+
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+---
+
+<article class="film-card">
+  <a href={reviewUrl} target="_blank" rel="noopener noreferrer" class="poster-link">
+    {posterUrl ? (
+      <img src={posterUrl} alt={`${title} poster`} class="poster" loading="lazy" />
+    ) : (
+      <div class="poster-placeholder">
+        <span>No Poster</span>
+      </div>
+    )}
+  </a>
+  <div class="film-info">
+    <h3 class="film-title">
+      <a href={reviewUrl} target="_blank" rel="noopener noreferrer">
+        {title}
+      </a>
+    </h3>
+    <p class="film-year">{year}</p>
+    {rating > 0 && <p class="film-rating">{formatRating(rating)}</p>}
+    <p class="film-date">Watched {formatDate(watchedDate)}</p>
+  </div>
+</article>
+
+<style>
+  .film-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .film-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .poster-link {
+    display: block;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background: var(--color-bg-secondary);
+  }
+
+  .poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .film-card:hover .poster {
+    transform: scale(1.03);
+  }
+
+  .poster-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+  }
+
+  .film-info {
+    padding: 1rem;
+  }
+
+  .film-title {
+    font-size: 1rem;
+    margin: 0 0 0.25rem;
+    line-height: 1.3;
+  }
+
+  .film-title a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .film-title a:hover {
+    text-decoration: underline;
+  }
+
+  .film-year {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .film-rating {
+    color: #f59e0b;
+    font-size: 1rem;
+    margin: 0 0 0.25rem;
+    letter-spacing: 1px;
+  }
+
+  .film-date {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    margin: 0;
+  }
+</style>

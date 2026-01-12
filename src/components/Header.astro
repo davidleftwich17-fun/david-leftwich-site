@@ -1,0 +1,90 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/films', label: 'Films' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="header-container">
+    <a href="/" class="logo">David Leftwich</a>
+    <nav class="nav">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--color-primary);
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+  }
+
+  .logo:hover {
+    color: white;
+    text-decoration: none;
+    opacity: 0.9;
+  }
+
+  .nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav-link.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 600px) {
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>

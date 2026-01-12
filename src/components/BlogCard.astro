@@ -1,0 +1,79 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  slug: string;
+}
+
+const { title, description, date, slug } = Astro.props;
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+---
+
+<article class="blog-card">
+  <a href={`/blog/${slug}`} class="card-link">
+    <time class="blog-date">{formatDate(date)}</time>
+    <h3 class="blog-title">{title}</h3>
+    <p class="blog-description">{description}</p>
+    <span class="read-more">Read more →</span>
+  </a>
+</article>
+
+<style>
+  .blog-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .blog-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .card-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-date {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-title {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem;
+    transition: color 0.2s ease;
+  }
+
+  .blog-card:hover .blog-title {
+    color: var(--color-accent);
+  }
+
+  .blog-description {
+    color: var(--color-text);
+    font-size: 0.95rem;
+    margin: 0 0 1rem;
+    line-height: 1.5;
+  }
+
+  .read-more {
+    color: var(--color-accent);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+</style>

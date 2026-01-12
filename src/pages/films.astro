@@ -1,0 +1,85 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FilmCard from '../components/FilmCard.astro';
+import { getLetterboxdFilms } from '../lib/letterboxd';
+
+const films = await getLetterboxdFilms('PghMovieGuy');
+---
+
+<BaseLayout title="Films" description="Recent films I've watched, pulled from my Letterboxd diary.">
+  <div class="page-header">
+    <h1>Films</h1>
+    <p>
+      My recent watches from <a href="https://letterboxd.com/PghMovieGuy" target="_blank" rel="noopener noreferrer">Letterboxd</a>
+    </p>
+  </div>
+
+  {films.length > 0 ? (
+    <div class="films-grid">
+      {films.map(film => (
+        <FilmCard
+          title={film.title}
+          year={film.year}
+          rating={film.rating}
+          watchedDate={film.watchedDate}
+          posterUrl={film.posterUrl}
+          reviewUrl={film.reviewUrl}
+        />
+      ))}
+    </div>
+  ) : (
+    <div class="empty-state">
+      <p>Unable to load films at the moment. Check out my <a href="https://letterboxd.com/PghMovieGuy" target="_blank" rel="noopener noreferrer">Letterboxd profile</a> directly.</p>
+    </div>
+  )}
+
+  <div class="letterboxd-link">
+    <a href="https://letterboxd.com/PghMovieGuy" target="_blank" rel="noopener noreferrer" class="view-profile">
+      View full profile on Letterboxd →
+    </a>
+  </div>
+</BaseLayout>
+
+<style>
+  .films-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--color-text-muted);
+  }
+
+  .letterboxd-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  .view-profile {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  .view-profile:hover {
+    background: var(--color-primary-light);
+    text-decoration: none;
+    color: white;
+  }
+
+  @media (max-width: 600px) {
+    .films-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+  }
+</style>
